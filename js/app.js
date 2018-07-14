@@ -1,61 +1,78 @@
 /*
  * Create a list that holds all of your cards
  */
-const icons = ["fa fa-diamond","fa fa-diamond","fa fa-paper-plane-o","fa fa-paper-plane-o","fa fa-anchor","fa fa-anchor","fa fa-bolt","fa fa-bolt","fa fa-cube","fa fa-cube","fa fa-anchor","fa fa-anchor","fa fa-leaf","fa fa-leaf","fa fa-bicycle","fa fa-bicycle"];
+const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-anchor", "fa fa-anchor", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle"];
 const cardsContainer = document.querySelector(".deck");
-let openedCards= [];
-
+let openedCards = [];
+let matchedCards = [];
 
 //Creating cards
+function init() {
+    for (let i = 0; i < icons.length; i++) {
+        const card = document.createElement("li");
+        card.classList.add("card");
+        card.innerHTML = `<i class="${icons[i]}"></i>`;
+        cardsContainer.appendChild(card);
 
-for(let i=0;i<icons.length;i++)
-{
-    const card = document.createElement("li");
-    card.classList.add("card");
-    card.innerHTML = `<i class="${icons[i]}"></i>`;
-    //Listner
+        click(card);
+    }
+}
+
+function click(card) {
     card.addEventListener(
         "click",
-        function(){
+        function () {
             //  we have a card opened
             const currentCard = this;
             const previousCard = openedCards[0];
 
-            if(openedCards.length === 1)
-            {
-                card.classList.add("show","open");
+            if (openedCards.length === 1) {
+                card.classList.add("show", "open", "disable");
                 openedCards.push(currentCard);
                 //compararision
-                if(currentCard.innerHTML === previousCard.innerHTML)
-                {
-                    currentCard.classList.add("match");
-                    previousCard.classList.add("match");
-
-                    openedCards = [];
-                }
-                else
-                {
-                    currentCard.classList.remove("show","open");
-                    previousCard.classList.remove("show","open");
-                    openedCards = [];
-                }
+                compare(currentCard, previousCard);
             }
             // we dont have any card opened
-            else
-            {
-                currentCard.classList.add("show","open");
+            else {
+                currentCard.classList.add("show", "open","disable");
                 openedCards.push(currentCard);
             }
-            
+
         }
     );
-    cardsContainer.appendChild(card);
 }
 
+function compare(currentCard, previousCard) {
+    if (currentCard.innerHTML === previousCard.innerHTML) 
+    {
+        currentCard.classList.add("match");
+        previousCard.classList.add("match");
 
+        matchedCards.push(currentCard, previousCard);
+        openedCards = [];
+        isOver();
+    } 
+    else 
+    {
+        setTimeout(
+            function () {
+                currentCard.classList.remove("show", "open");
+                previousCard.classList.remove("show", "open");
+                openedCards = [];
+            },
+            500
+        );
 
+    }
+}
 
+function isOver() {
+    if (icons.length === matchedCards.length)
+        alert("Game Over");
+}
 
+//Start of the game
+init();
 
 
 
@@ -81,7 +98,8 @@ for(let i=0;i<icons.length;i++)
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
