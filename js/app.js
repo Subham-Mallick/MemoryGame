@@ -59,20 +59,15 @@ function compare(currentCard, previousCard) {
             function () {
                 currentCard.classList.remove("show", "open","disable");
                 previousCard.classList.remove("show", "open","disable");
-                openedCards = [];
             },
             500
         );
-
+        openedCards = [];
     }
     // add new move
     addMove();
 }
 
-function isOver() {
-    if (icons.length === matchedCards.length)
-        alert("Game Over");
-}
 
 //add moves
 const movesContainer = document.querySelector(".moves");
@@ -81,28 +76,62 @@ function addMove()
 {
     moves++;
     movesContainer.innerHTML = moves;
+    //set the rating
+    rating();
 }
 
 //restart btn
 const restartBtn = document.querySelector(".restart");
+function reset()
+{
+    //delete all cards
+    cardsContainer.innerHTML = "";
+
+    //call init to init all cards
+    init();
+
+    //reset variables
+    matchedCards = [];
+    moves = 0;
+    starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>`;
+}
 restartBtn.addEventListener(
     "click",
-    function()
-    {
-        //delete all cards
-        cardsContainer.innerHTML = "";
-
-        //call init to init all cards
-        init();
-
-        //reset variables
-        matchedCards = [];
-    }
+    reset
 );
+
+//rating
+const starsContainer = document.querySelector(".stars");
+function rating()
+{
+    if(moves > 20)
+    {
+        starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>
+        <li><i class="fa fa-star"></i></li>`;
+    }
+    else if(moves > 24)
+    {
+        starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>`;
+    }
+    else if(moves > 28)
+    {
+        alert("Game Over! You Loose");
+        reset();
+    }
+}
+
 
 //Start of the game
 init();
 
+function isOver() {
+    if (icons.length === matchedCards.length)
+    {
+        alert("Game Over! You won in "+(moves+1)+" moves");
+    }   
+}
 
 
 
