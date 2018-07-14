@@ -2,12 +2,12 @@
  * Create a list that holds all of your cards
  */
 const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-anchor", "fa fa-anchor", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle"];
-const cardsContainer = document.querySelector(".deck");
-let openedCards = [];
-let matchedCards = [];
+let moves = 0;
 
 //Creating cards
+const cardsContainer = document.querySelector(".deck");
 function init() {
+    movesContainer.innerHTML = "0";
     for (let i = 0; i < icons.length; i++) {
         const card = document.createElement("li");
         card.classList.add("card");
@@ -17,7 +17,8 @@ function init() {
         click(card);
     }
 }
-
+let openedCards = [];
+let matchedCards = [];
 function click(card) {
     card.addEventListener(
         "click",
@@ -64,6 +65,8 @@ function compare(currentCard, previousCard) {
         );
 
     }
+    // add new move
+    addMove();
 }
 
 function isOver() {
@@ -71,11 +74,34 @@ function isOver() {
         alert("Game Over");
 }
 
+//add moves
+const movesContainer = document.querySelector(".moves");
+
+function addMove()
+{
+    moves++;
+    movesContainer.innerHTML = moves;
+}
+
+//restart btn
+const restartBtn = document.querySelector(".restart");
+restartBtn.addEventListener(
+    "click",
+    function()
+    {
+        //delete all cards
+        cardsContainer.innerHTML = "";
+
+        //call init to init all cards
+        init();
+
+        //reset variables
+        matchedCards = [];
+    }
+);
+
 //Start of the game
 init();
-
-
-
 
 
 
