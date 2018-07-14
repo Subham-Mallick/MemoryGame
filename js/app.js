@@ -2,18 +2,51 @@
  * Create a list that holds all of your cards
  */
 const icons = ["fa fa-diamond","fa fa-diamond","fa fa-paper-plane-o","fa fa-paper-plane-o","fa fa-anchor","fa fa-anchor","fa fa-bolt","fa fa-bolt","fa fa-cube","fa fa-cube","fa fa-anchor","fa fa-anchor","fa fa-leaf","fa fa-leaf","fa fa-bicycle","fa fa-bicycle"];
+const cardsContainer = document.querySelector(".deck");
+let openedCards= [];
+
 
 //Creating cards
-const cardsContainer = document.querySelector(".deck");
+
 for(let i=0;i<icons.length;i++)
 {
     const card = document.createElement("li");
     card.classList.add("card");
     card.innerHTML = `<i class="${icons[i]}"></i>`;
+    //Listner
     card.addEventListener(
         "click",
         function(){
-            card.classList.add("show","open");
+            //  we have a card opened
+            const currentCard = this;
+            const previousCard = openedCards[0];
+
+            if(openedCards.length === 1)
+            {
+                card.classList.add("show","open");
+                openedCards.push(currentCard);
+                //compararision
+                if(currentCard.innerHTML === previousCard.innerHTML)
+                {
+                    currentCard.classList.add("match");
+                    previousCard.classList.add("match");
+
+                    openedCards = [];
+                }
+                else
+                {
+                    currentCard.classList.remove("show","open");
+                    previousCard.classList.remove("show","open");
+                    openedCards = [];
+                }
+            }
+            // we dont have any card opened
+            else
+            {
+                currentCard.classList.add("show","open");
+                openedCards.push(currentCard);
+            }
+            
         }
     );
     cardsContainer.appendChild(card);
