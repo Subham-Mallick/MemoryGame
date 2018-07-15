@@ -3,12 +3,32 @@
  */
 let icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-anchor", "fa fa-anchor", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle"];
 let moves = 0;
+let second = 0,nowTime;
+const timer = document.querySelector(".timer");
+
+//time function
+function initTimer()
+{
+    nowTime = setInterval(
+        function()
+        {
+            timer.innerHTML = `${second}`;
+            second = second+1;
+        },1000
+    );
+}
+function resetTimer(timer) 
+{
+    clearInterval(timer);
+}
+
 
 //Creating cards
 const cardsContainer = document.querySelector(".deck");
 function init() {
+    initTimer();
     movesContainer.innerHTML = "0";
-    icons = shuffle(icons);
+    //icons = shuffle(icons);
     for (let i = 0; i < icons.length; i++) {
         const card = document.createElement("li");
         card.classList.add("card");
@@ -85,6 +105,7 @@ function addMove()
 const restartBtn = document.querySelector(".restart");
 function reset()
 {
+    resetTimer(nowTime);
     //delete all cards
     cardsContainer.innerHTML = "";
 
@@ -97,6 +118,9 @@ function reset()
     starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>
     <li><i class="fa fa-star"></i></li>
     <li><i class="fa fa-star"></i></li>`;
+    
+    second = 0;
+    timer.innerHTML = `${second}`;
 }
 restartBtn.addEventListener(
     "click",
@@ -129,9 +153,10 @@ function rating()
 init();
 
 function isOver() {
+    let starCount = starsContainer.children.length;
     if (icons.length === matchedCards.length)
     {
-        alert("Game Over! You won in "+(moves+1)+" moves");
+        alert(`Game Over! You won in ${moves+1} moves and in ${second} second with ${starCount} stars`);
     }   
 }
 
