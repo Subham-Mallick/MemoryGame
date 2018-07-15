@@ -105,7 +105,7 @@ function addMove()
 const restartBtn = document.querySelector(".restart");
 function reset()
 {
-    clearInterval(nowTime);
+    resetTimer(nowTime);
     //delete all cards
     cardsContainer.innerHTML = "";
 
@@ -115,7 +115,9 @@ function reset()
     //reset variables
     matchedCards = [];
     moves = 0;
-    starsContainer.innerHTML = `<li><i class="fa fa-star" style="color: rgb(255,215,0)"></i></li><li><i class="fa fa-star" style="color: rgb(255,215,0)"></i></li><li><i class="fa fa-star" style="color: rgb(255,215,0)"></i></li>`;
+    starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>`;
     
     second = 0;
     timer.innerHTML = `${second}`;
@@ -131,17 +133,17 @@ function rating()
 {
     if( moves > 20 && moves <24)
     {
-        starsContainer.innerHTML = `<li><i class="fa fa-star" style="color: rgb(255,215,0)"></i></li><li><i class="fa fa-star" style="color: rgb(255,215,0)"></i></li>
+        starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>
         <li><i class="fa fa-star"></i></li>`;
     }
     else if(28 > moves && moves > 23)
     {
-        starsContainer.innerHTML = `<li><i class="fa fa-star" style="color: rgb(255,215,0)"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>`;
+        starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>`;
     }
     else if(moves > 27)
     {
-        starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>`;
-        alert("Oops! Is it too difficult? Keep playing");
+        starsContainer.innerHTML = ``;
+        alert("Your Memory is really weak! Keep playing");
         reset();
     }
 }
@@ -155,7 +157,6 @@ function isOver() {
     if (icons.length === matchedCards.length)
     {
         alert(`Game Over! You won in ${moves+1} moves and in ${second} second with ${starCount} stars`);
-        clearInterval(nowTime);
     }   
 }
 
