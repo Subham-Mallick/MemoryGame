@@ -1,13 +1,14 @@
 /*
  * Create a list that holds all of your cards
  */
-const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-anchor", "fa fa-anchor", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle"];
+let icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-anchor", "fa fa-anchor", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle"];
 let moves = 0;
 
 //Creating cards
 const cardsContainer = document.querySelector(".deck");
 function init() {
     movesContainer.innerHTML = "0";
+    icons = shuffle(icons);
     for (let i = 0; i < icons.length; i++) {
         const card = document.createElement("li");
         card.classList.add("card");
@@ -106,18 +107,19 @@ restartBtn.addEventListener(
 const starsContainer = document.querySelector(".stars");
 function rating()
 {
-    if(moves > 20)
+    if( moves > 20 && moves <24)
     {
         starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>
         <li><i class="fa fa-star"></i></li>`;
     }
-    else if(moves > 24)
+    else if(28 > moves && moves > 23)
     {
         starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>`;
     }
-    else if(moves > 28)
+    else if(moves > 27)
     {
-        alert("Game Over! You Loose");
+        starsContainer.innerHTML = ``;
+        alert("Your Memory is really weak! Keep playing");
         reset();
     }
 }
