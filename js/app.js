@@ -28,7 +28,7 @@ const cardsContainer = document.querySelector(".deck");
 function init() {
     initTimer();
     movesContainer.innerHTML = "0";
-    //icons = shuffle(icons);
+    icons = shuffle(icons);
     for (let i = 0; i < icons.length; i++) {
         const card = document.createElement("li");
         card.classList.add("card");
